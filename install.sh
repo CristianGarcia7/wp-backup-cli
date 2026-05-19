@@ -56,9 +56,9 @@ if ! command -v wp &>/dev/null; then
   curl -sO https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
   chmod +x wp-cli.phar
   sudo mv wp-cli.phar /usr/local/bin/wp
-  echo "   ✅ WP-CLI instalado: $(wp --version)"
+  echo "   ✅ WP-CLI instalado: $(wp --version --allow-root 2>/dev/null)"
 else
-  echo "   ✅ WP-CLI ya instalado: $(wp --version)"
+  echo "   ✅ WP-CLI ya instalado: $(wp --version --allow-root 2>/dev/null)"
 fi
 
 # ── 3. Crear directorios y log
