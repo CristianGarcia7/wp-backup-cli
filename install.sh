@@ -1,6 +1,6 @@
 #!/bin/bash
 # ═══════════════════════════════════════════════════════
-# WP-BACKUP-CLI — Instalador v2.0
+# WP-BACKUP-CLI — Instalador v4.0
 # Uso: curl -fsSL https://raw.githubusercontent.com/CristianGarcia7/wp-backup-cli/main/install.sh | bash
 # ═══════════════════════════════════════════════════════
 
@@ -13,7 +13,7 @@ LOG_FILE="/var/log/wp-backup.log"
 
 echo ""
 echo "╔══════════════════════════════════════╗"
-echo "║     WP-BACKUP-CLI — Instalador v2    ║"
+echo "║     WP-BACKUP-CLI — Instalador v4    ║"
 echo "╚══════════════════════════════════════╝"
 echo ""
 
@@ -64,33 +64,37 @@ fi
 # ── 3. Crear directorios y log
 sudo mkdir -p "$CONFIG_DIR"
 sudo touch "$LOG_FILE"
-sudo chmod 666 "$LOG_FILE"
+sudo chmod 640 "$LOG_FILE"
 
-# ── 4. Descargar el comando wpb
+# ── 4. Descargar comando wpb
 echo "📥 Descargando comando wpb..."
 sudo curl -fsSL "$REPO/wpb.sh" -o "$INSTALL_DIR/wpb"
 sudo chmod +x "$INSTALL_DIR/wpb"
 
-# ── 5. Inicializar archivo de sitios si no existe
+# ── 5. Inicializar sites.conf si no existe
 if [ ! -f "$CONFIG_DIR/sites.conf" ]; then
   echo "# formato: nombre:ruta_wordpress:bucket_s3" | sudo tee "$CONFIG_DIR/sites.conf" > /dev/null
 fi
 
 echo ""
 echo "╔══════════════════════════════════════╗"
-echo "║   ✅ WP-BACKUP-CLI v2 instalado      ║"
+echo "║   ✅ WP-BACKUP-CLI v4 instalado      ║"
 echo "╚══════════════════════════════════════╝"
 echo ""
-echo "Comandos disponibles:"
-echo "  wpb add <sitio> <ruta> <bucket>   — Agregar sitio"
+echo "Uso normal:"
+echo "  wpb add <sitio> <ruta> <bucket>   — Agregar sitio (sin parámetros muestra guía)"
 echo "  wpb list                          — Ver sitios registrados"
 echo "  wpb run <sitio>                   — Correr backup ahora"
 echo "  wpb run-all                       — Correr todos"
 echo "  wpb status                        — Ver estado backups"
-echo "  wpb monitor                       — Ver alertas y salud S3"
+echo "  wpb monitor                       — Ver salud general"
 echo "  wpb logs                          — Ver logs"
 echo "  wpb remove <sitio>                — Eliminar sitio"
 echo ""
-echo "Ejemplo:"
-echo "  wpb add natumalta-stg /home/natumalta/web/natumalta-stg.quadi.io/public_html backups-produ"
+echo "En caso de emergencia (instancia nueva):"
+echo "  wpb recover <bucket>              — Recuperar lista de sitios desde S3"
+echo "  wpb restore <sitio>               — Restaurar sitio desde S3"
+echo ""
+echo "Ejemplo para empezar:"
+echo "  wpb add natumalta /home/natumalta/web/natumalta-stg.quadi.io/public_html backups-produ"
 echo ""
