@@ -191,9 +191,9 @@ cmd_add() {
 
   echo -e "🔧 Configurando ${BOLD}$SITE_NAME${NC}..."
 
-  DB_NAME=$(grep "DB_NAME" "$WP_PATH/wp-config.php" | grep "define" | cut -d"'" -f4)
-  DB_USER=$(grep "DB_USER" "$WP_PATH/wp-config.php" | grep "define" | grep -v "DB_USERNAME" | cut -d"'" -f4)
-  DB_PASS=$(grep "DB_PASSWORD" "$WP_PATH/wp-config.php" | grep "define" | cut -d"'" -f4)
+  DB_NAME=$(grep "DB_NAME" "$WP_PATH/wp-config.php" | grep "define" | tr '"' "'" | cut -d"'" -f4)
+  DB_USER=$(grep "DB_USER" "$WP_PATH/wp-config.php" | grep "define" | grep -v "DB_USERNAME" | tr '"' "'" | cut -d"'" -f4)
+  DB_PASS=$(grep "DB_PASSWORD" "$WP_PATH/wp-config.php" | grep "define" | tr '"' "'" | cut -d"'" -f4)
 
   if [ -z "$DB_NAME" ]; then
     echo -e "${RED}❌ No se pudo leer wp-config.php${NC}"
@@ -425,9 +425,9 @@ cmd_restore() {
   echo -e "   ✅ Archivos restaurados"
 
   # ── Paso 3: Leer credenciales
-  DB_NAME=$(grep "DB_NAME" "$WP_PATH/wp-config.php" | grep "define" | cut -d"'" -f4)
-  DB_USER=$(grep "DB_USER" "$WP_PATH/wp-config.php" | grep "define" | grep -v "DB_USERNAME" | cut -d"'" -f4)
-  DB_PASS=$(grep "DB_PASSWORD" "$WP_PATH/wp-config.php" | grep "define" | cut -d"'" -f4)
+  DB_NAME=$(grep "DB_NAME" "$WP_PATH/wp-config.php" | grep "define" | tr '"' "'" | cut -d"'" -f4)
+  DB_USER=$(grep "DB_USER" "$WP_PATH/wp-config.php" | grep "define" | grep -v "DB_USERNAME" | tr '"' "'" | cut -d"'" -f4)
+  DB_PASS=$(grep "DB_PASSWORD" "$WP_PATH/wp-config.php" | grep "define" | tr '"' "'" | cut -d"'" -f4)
 
   # ── Paso 4: Crear usuario MySQL si no existe
   echo -e "🔐 Verificando usuario MySQL..."
